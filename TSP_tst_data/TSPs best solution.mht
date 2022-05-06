@@ -1,0 +1,805 @@
+MIME-Version: 1.0
+Content-Location: file:///C:/9F8BB24E/TSPsbestsolution.htm
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="us-ascii"
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml"
+xmlns:o=3D"urn:schemas-microsoft-com:office:office"
+xmlns:w=3D"urn:schemas-microsoft-com:office:word"
+xmlns=3D"http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=3DContent-Type content=3D"text/html; charset=3Dus-ascii">
+<meta name=3DProgId content=3DWord.Document>
+<meta name=3DGenerator content=3D"Microsoft Word 11">
+<meta name=3DOriginator content=3D"Microsoft Word 11">
+<link rel=3DFile-List href=3D"TSPsbestsolution.files/filelist.xml">
+<link rel=3DEdit-Time-Data href=3D"TSPsbestsolution.files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Symmetric TSPs</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>User</o:Author>
+  <o:LastAuthor>User</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>0</o:TotalTime>
+  <o:Created>2010-04-18T04:45:00Z</o:Created>
+  <o:LastSaved>2010-04-18T04:45:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>328</o:Words>
+  <o:Characters>1874</o:Characters>
+  <o:Company>neu</o:Company>
+  <o:Lines>15</o:Lines>
+  <o:Paragraphs>4</o:Paragraphs>
+  <o:CharactersWithSpaces>2198</o:CharactersWithSpaces>
+  <o:Version>11.5606</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState=3D"false" LatentStyleCount=3D"156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0mm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:SimSun;
+	color:black;}
+h1
+	{mso-margin-top-alt:auto;
+	margin-right:0mm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0mm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	font-size:24.0pt;
+	font-family:"Times New Roman";
+	color:black;}
+h3
+	{mso-margin-top-alt:auto;
+	margin-right:0mm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0mm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:3;
+	font-size:13.5pt;
+	font-family:"Times New Roman";
+	color:black;}
+a:link, span.MsoHyperlink
+	{color:blue;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:42.55pt;
+	mso-footer-margin:49.6pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:441848506;
+	mso-list-template-ids:1507480152;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1
+	{mso-list-id:1994677783;
+	mso-list-template-ids:-440662884;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0mm;}
+ul
+	{margin-bottom:0mm;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:\666E\901A\8868\683C;
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0mm 5.4pt 0mm 5.4pt;
+	mso-para-margin:0mm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext=3D"edit" spidmax=3D"2050"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext=3D"edit">
+  <o:idmap v:ext=3D"edit" data=3D"1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body bgcolor=3Dwhite lang=3DZH-CN link=3Dblue vlink=3Dblue style=3D'tab-in=
+terval:21.0pt'>
+
+<div class=3DSection1>
+
+<div class=3DMsoNormal align=3Dcenter style=3D'text-align:center'><span lan=
+g=3DEN-US>
+
+<hr size=3D3 width=3D"100%" align=3Dcenter>
+
+</span></div>
+
+<h1><span lang=3DEN-US style=3D'font-size:18.0pt'>Optimal solutions for sym=
+metric
+TSPs</span></h1>
+
+<div class=3DMsoNormal align=3Dcenter style=3D'text-align:center'><span lan=
+g=3DEN-US>
+
+<hr size=3D3 width=3D"100%" align=3Dcenter>
+
+</span></div>
+
+<p class=3DMsoNormal style=3D'margin-bottom:12.0pt'><span lang=3DEN-US><br>
+</span><span lang=3DEN-US style=3D'font-size:13.5pt'>When I published TSPLI=
+B more
+than 10 years ago, I expected that at least solving the large problem insta=
+nces
+to proven optimality would pose a challange for the years to come. <br>
+<br>
+However, due to enormous algorithmic progress all problems are now solved to
+optimality!!</span></p>
+
+<ul type=3Ddisc>
+ <li class=3DMsoNormal style=3D'color:red;mso-margin-top-alt:auto;mso-margi=
+n-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>a280 : 2579</span><span lang=3DEN-US> <o:p>=
+</o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>ali535 : 202339</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>att48 : 10628</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>att532 : 27686</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>bayg29 : 1610</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>bays29 : 2020</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>berlin52 : 7542</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>bier127 : 118282</span><span lang=3DEN-US> =
+<o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>brazil58 : 25395</span><span lang=3DEN-US> =
+<o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>brd14051 : 469385</span><span lang=3DEN-US>=
+ <o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>brg180 : 1950</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>burma14 : 3323</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>ch130 : 6110</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>ch150 : 6528</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>d198 : 15780</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>d493 : 35002</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>d657 : 48912</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>d1291 : 50801</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>d1655 : 62128</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>d2103 : 80450</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>d15112 : 1573084</span><span lang=3DEN-US> =
+<o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>d18512 : 645238</span><span lang=3DEN-US><o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>dantzig42 : 699</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>dsj1000 : 18659688 (EUC_2D)</span><span
+     lang=3DEN-US> <o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>dsj1000 : 18660188 (CEIL_2D)</span><span
+     lang=3DEN-US> <o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>eil51 : 426</span><span lang=3DEN-US> <o:p>=
+</o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>eil76 : 538</span><span lang=3DEN-US> <o:p>=
+</o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>eil101 : 629</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>fl417 : 11861</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>fl1400 : 20127</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>fl1577 : 22249</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>fl3795 : 28772</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>fnl4461 : 182566</span><span lang=3DEN-US> =
+<o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>fri26 : 937</span><span lang=3DEN-US> <o:p>=
+</o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>gil262 : 2378</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>gr17 : 2085</span><span lang=3DEN-US> <o:p>=
+</o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>gr21 : 2707</span><span lang=3DEN-US> <o:p>=
+</o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>gr24 : 1272</span><span lang=3DEN-US> <o:p>=
+</o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>gr48 : 5046</span><span lang=3DEN-US> <o:p>=
+</o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>gr96 : 55209</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>gr120 : 6942</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>gr137 : 69853</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>gr202 : 40160</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>gr229 : 134602</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>gr431 : 171414</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>gr666 : 294358</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>hk48 : 11461</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>kroA100 : 21282</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>kroB100 : 22141</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>kroC100 : 20749</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>kroD100 : 21294</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>kroE100 : 22068</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>kroA150 : 26524</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>kroB150 : 26130</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>kroA200 : 29368</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>kroB200 : 29437</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>lin105 : 14379</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>lin318 : 42029</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>linhp318 : 41345</span><span lang=3DEN-US> =
+<o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>nrw1379 : 56638</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>p654 : 34643</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pa561 : 2763</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pcb442 : 50778</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pcb1173 : 56892</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pcb3038 : 137694</span><span lang=3DEN-US> =
+<o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pla7397 : 23260728</span><span lang=3DEN-US=
+> <o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pla33810 : 66048945</span><span lang=3DEN-U=
+S> <o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pla85900 : 142382641</span><span lang=3DEN-=
+US> <o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pr76 : 108159</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pr107 : 44303</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pr124 : 59030</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pr136 : 96772</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pr144 : 58537</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pr152 : 73682</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pr226 : 80369</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pr264 : 49135</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pr299 : 48191</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pr439 : 107217</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pr1002 : 259045</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>pr2392 : 378032</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>rat99 : 1211</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>rat195 : 2323</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>rat575 : 6773</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>rat783 : 8806</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>rd100 : 7910</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>rd400 : 15281</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>rl1304 : 252948</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>rl1323 : 270199</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>rl1889 : 316536</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>rl5915 : 565530</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>rl5934 : 556045</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>rl11849 : 923288</span><span lang=3DEN-US> =
+<o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>si175 : 21407</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>si535 : 48450</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>si1032 : 92650</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>st70 : 675</span><span lang=3DEN-US> <o:p><=
+/o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>swiss42 : 1273</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>ts225 : 126643</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>tsp225 : 3916</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>u159 : 42080</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>u574 : 36905</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>u724 : 41910</span><span lang=3DEN-US> <o:p=
+></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>u1060 : 224094</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>u1432 : 152970</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>u1817 : 57201</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>u2152 : 64253</span><span lang=3DEN-US> <o:=
+p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>u2319 : 234256</span><span lang=3DEN-US> <o=
+:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>ulysses16 : 6859</span><span lang=3DEN-US> =
+<o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>ulysses22 : 7013</span><span lang=3DEN-US> =
+<o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>usa13509 : 19982859</span><span lang=3DEN-U=
+S> <o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>vm1084 : 239297</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+ <li class=3DMsoNormal style=3D'color:#000099;mso-margin-top-alt:auto;mso-m=
+argin-bottom-alt:
+     auto;mso-list:l1 level1 lfo1;tab-stops:list 36.0pt'><span lang=3DEN-US
+     style=3D'font-size:13.5pt'>vm1748 : 336556</span><span lang=3DEN-US> <=
+o:p></o:p></span></li>
+</ul>
+
+<div class=3DMsoNormal align=3Dcenter style=3D'text-align:center'><span lan=
+g=3DEN-US>
+
+<hr size=3D3 width=3D"100%" align=3Dcenter>
+
+</span></div>
+
+<p class=3DMsoNormal style=3D'margin-left:36.0pt'><i><span lang=3DEN-US
+style=3D'font-size:13.5pt'>May 22, 2007</span></i></p>
+
+<div class=3DMsoNormal align=3Dcenter style=3D'text-align:center'><span lan=
+g=3DEN-US>
+
+<hr size=3D3 width=3D"100%" align=3Dcenter>
+
+</span></div>
+
+<h3><span lang=3DEN-US>Return to <a
+href=3D"http://www.iwr.uni-heidelberg.de/iwr/comopt/">our group</a></span><=
+/h3>
+
+</div>
+
+</body>
+
+</html>
