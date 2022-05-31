@@ -1,0 +1,33 @@
+\documentclass[a4paper, twoside, 11pt]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage{fourier, heuristica}
+\usepackage{array, booktabs}
+\usepackage{graphicx}
+\usepackage[x11names]{xcolor}
+\usepackage{colortbl}
+\usepackage{caption}
+\DeclareCaptionFont{blue}{\color{LightSteelBlue3}}
+
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+
+\begin{document}
+
+\begin{table}
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\captionsetup{singlelinecheck=false, font=blue, labelfont=sc, labelsep=quad}
+\caption{论文完成情况时间表}\vskip -1.5ex
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{5cm}}
+\toprule
+\addlinespace[1.5ex]
+第10周 & 完成总体思路搭建\\
+第11周 & 完成TS算法，部分完成PSO算法，开题报错\\
+第12周 & 完善TSP测试样例读取，对各储存方式的样例均可用\\
+第13周 & 从邻接矩阵找图的性质，中期报告\\
+第14周 & 完成PSO，根据运行结果确定训练数据\\
+第15周 & 构建预测模型，给出算法预测\\
+第16周 & 扩展到其他算法，最终答辩\\
+\end{tabular}
+\end{table}
+\end{document}

@@ -226,35 +226,35 @@ class TSP_DATA:
 
     
   def get_matrix(self):
-      """从外界获取矩阵的接口
-      """
-      try:
-          return self.matrix
-      except:
-          self.cal_table_and_matrix(requireTable=False)
-          return self.matrix
+    """从外界获取矩阵的接口
+    """
+    try:
+        return self.matrix
+    except:
+        self.cal_table_and_matrix(requireTable=False)
+        return self.matrix
       
   def get_table(self):
-      """从外界获取矩阵的接口
-      """
-      try:
-          return self.table
-      except:
-          self.cal_table_and_matrix(requireMatrix=False)
-          return self.table      
+    """从外界获取矩阵的接口
+    """
+    try:
+        return self.table
+    except:
+        self.cal_table_and_matrix(requireMatrix=False)
+        return self.table      
         
   def get_coorodinate_list(self):
-      """从外界获取坐标表的接口
-      """
-      if self.EDGE_WEIGHT_TYPE == "EXPLICIT":
-          # 需要检查有没有地理坐标这个参数
-          pass
-      try:
-          return list(self.coorodinate_table)
-      except:
-          self.get_coorodinate_table_from_raw()
-          return list(self.coorodinate_table)
-    
+    """从外界获取坐标表的接口
+    """
+    if self.EDGE_WEIGHT_TYPE == "EXPLICIT":
+        # 需要检查有没有地理坐标这个参数
+        pass
+    try:
+        return list(self.coorodinate_table)
+    except:
+        self.get_coorodinate_table_from_raw()
+        return list(self.coorodinate_table)
+  
 
   def cal_table_and_matrix(self,requireTable=True,requireMatrix=True):
     if self.EDGE_WEIGHT_TYPE == "EXPLICIT":
@@ -831,8 +831,11 @@ class TSP_DATA:
                     
     except:
     	print("未发现目标元素")
-     
+
     return best_res_dict
+# 这里出现了问题，考虑到删除掉之前加入的几个函数？
+
+
 
 """a=[]
 a.append([1,2])
