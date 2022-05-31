@@ -7,14 +7,13 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 class SOM(object):
     def __init__(self, num_city, data):
         self.num_city = num_city
-        self.location = data.copy()
+        #self.location = data.copy()
         self.iteraton = 8000
         self.learning_rate = 0.8
-        self.dis_mat = self.compute_dis_mat(num_city, self.location)
+        self.dis_mat = np.array(data)
         self.best_path = []
         self.best_length = math.inf
         self.iter_x = []
@@ -141,7 +140,7 @@ class SOM(object):
             self.iter_y.append(self.best_length)
             print(i, self.iteraton, self.best_length)
             # 画出初始化的路径
-            if i == 0:
+            if i == 0 and False:
                 plt.subplot(2, 2, 2)
                 plt.title('convergence curve')
                 show_data = self.location[self.best_path]
@@ -152,34 +151,26 @@ class SOM(object):
 
     def run(self):
         self.best_length, self.best_path = self.smo()
-        return self.location[self.best_path], self.best_length
+        return self.best_path, self.best_length
 
 
-# 读取数据
-def read_tsp(path):
-    lines = open(path, 'r').readlines()
-    assert 'NODE_COORD_SECTION\n' in lines
-    index = lines.index('NODE_COORD_SECTION\n')
-    data = lines[index + 1:-1]
-    tmp = []
-    for line in data:
-        line = line.strip().split(' ')
-        if line[0] == 'EOF':
-            continue
-        tmpline = []
-        for x in line:
-            if x == '':
-                continue
-            else:
-                tmpline.append(float(x))
-        if tmpline == []:
-            continue
-        tmp.append(tmpline)
-    data = tmp
-    return data
 
+if __name__ == "__main__":
+    import sys
+    sys.path.append('..')
+    from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
+    datapath = r'D:\0latex\System_engineering_programm\code\collection_from_web\data\st70.tsp'
+    data = TSP_DATA(datapath)
+    model = SOM(num_city=data.DIMENSION, data=data.matrix)
+    path, path_len = model.run()
+    print(path,path_len)
+    # 画图
+    iterations = model.iter_x
+    best_record = model.iter_y
+    plt.plot(iterations,best_record)
+    plt.show()
 
-data = read_tsp('data/st70.tsp')
+"""data = read_tsp('data/st70.tsp')
 
 data = np.array(data)
 plt.suptitle('PSO in st70.tsp')
@@ -205,3 +196,4 @@ best_record = model.iter_y
 axs[1].plot(iterations, best_record)
 axs[1].set_title('收敛曲线')
 plt.show()
+"""

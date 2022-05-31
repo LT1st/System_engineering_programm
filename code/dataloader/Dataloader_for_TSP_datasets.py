@@ -28,6 +28,9 @@ import os
 import glob
 import pandas as pd
 import numpy as np
+import re
+import requests 
+from bs4 import BeautifulSoup
 
 # 文件路径拼接
 tsp_data_path = os.path.join(data_folder,'*.tsp.gz')
@@ -49,11 +52,9 @@ for filename in glob.glob(atsp_data_path):
     
 print(file_atsp)
 
-file_atsp
+"""file_atsp
 
-"""测试算法
-
-"""
+测试算法
 
 df = pd.read_csv(file_tsp[2], header=None)
 listtt = (df[0][6+1]+df[0][len(df)-2])
@@ -65,7 +66,7 @@ listtt = (df[0][6+1]+df[0][len(df)-2])
 df1 = df[10:50]
 # df1.split(' ')
 
-"""### 数据集类型
+### 数据集类型
 index从0开始
 
 #### 数据规约
@@ -96,11 +97,50 @@ EDGE_WEIGHT_SECTIONEDGE_WEIGHT_FORMAT（如果是可选的WeightFormat::Function
 
 [解释数据网站](https://docs.rs/tspf/0.3.0/tspf/struct.Tsp.html)
 
-"""
-
 for i in range(4):
   print(i)
 [i for i in range(5)][0:2]
+
+_time_ = 0
+@timmer
+def p():
+  for i in range(int(1e7)):
+    i+3/2
+p(),t,a
+"""
+
+# 定义一个修饰器函数用来统计函数的运行时间
+# 参考我的csdn  https://blog.csdn.net/prinTao/article/details/121800857?spm=1001.2014.3001.5501
+import time
+# 尝试传时间参数出来
+run_time_list=[]# 中途无法清空
+def timmer(func):    #传入的参数是一个函数
+    def deco(*args, **kwargs): #本应传入运行函数的各种参数
+        #print('\n函数：{_funcname_}开始运行：'.format(_funcname_=func.__name__))
+        start_time = time.time()#调用代运行的函数，并将各种原本的参数传入
+        res = func(*args, **kwargs)
+        end_time = time.time()
+        run_time_list.append(end_time - start_time)
+        print('函数:{_funcname_}运行了 {_time_}秒'
+              .format(_funcname_=func.__name__, _time_=(end_time - start_time)))
+        return res#返回值为函数
+    return deco
+
+
+
+# 运行时间时间参数出来 保存在 run_time_list
+init_run_time_list=[]# 中途无法清空 
+def timmer_TSP_DATA_init(func):    #传入的参数是一个函数
+  def deco(*args, **kwargs): #本应传入运行函数的各种参数
+    # print('\n函数：{_funcname_}开始运行：'.format(_funcname_=func.__name__))
+    start_time = time.time()#调用代运行的函数，并将各种原本的参数传入
+    res = func(*args, **kwargs)
+    end_time = time.time()
+    init_run_time_list.append(end_time - start_time)
+    # print('函数:{_funcname_}运行了 {_time_}秒'
+    #       .format(_funcname_=func.__name__, _time_=(end_time - start_time)))
+    return res#返回值为函数
+  return deco
 
 class TSP_DATA:
   '''用于读取数据、存放图的数据结构
@@ -119,14 +159,21 @@ class TSP_DATA:
       self.EDGE_DATA_FORMAT
       self.NODE_COORD_TYPE required if EDGE_WEIGHT_TYPE is not WeightKind::Explicit
   
+  类内方法：
+
   '''
   # 初始化，读取数据，并获取表头的数据规约
+  @timmer_TSP_DATA_init # 专属修饰器，获得此方法运行时间，每次清空需要重新载入此类
   def __init__(self, path, requireTable=True, requireMatrix=True):
     """传入单个数据地址，读取并且加载数据的表头
     path:
       单个测试样例的数据地址
+    requireTable:
+      需要邻接表？
+    requireMatrix：
+      需要邻接矩阵？  
     """
-    self.debug = True
+    self.debug = False
     # 读取数据文件
     raw_data, name = self.read_any_file(path)
     # # 无论如何名字都是第0行
@@ -134,18 +181,59 @@ class TSP_DATA:
     self.get_headline(raw_data)
     # 保证数据名称和文件名称相同
     assert self.NAME == name
-    # 保证是TSP问题的文件
-    assert 'TSP' in self.TYPE
+    # 保证是TSP问题的文件，同时防止某些测试样例在类型后面瞎加东西
+    if 'ATSP' in self.TYPE :
+      self.TYPE = 'ATSP'
+    elif 'TSP' in self.TYPE :
+      self.TYPE = 'TSP'
     # 有数据区块 长条list
     self.rawnum = self.get_data_list(raw_data)
-    # 计算邻接矩阵 和 邻接表
     if self.debug:
       print("原始数据：",self.rawnum)
+    # 计算邻接矩阵 和 邻接表
+    self.cal_table_and_matrix()
+    
+  def get_matrix(self):
+      """从外界获取矩阵的接口
+      """
+      try:
+          return self.matrix
+      except:
+          self.cal_table_and_matrix(requireTable=False)
+          return self.matrix
+      
+  def get_table(self):
+      """从外界获取矩阵的接口
+      """
+      try:
+          return self.table
+      except:
+          self.cal_table_and_matrix(requireMatrix=False)
+          return self.table      
+        
+  def get_coorodinate_list(self):
+      """从外界获取坐标表的接口
+      """
+      if self.EDGE_WEIGHT_TYPE == "EXPLICIT":
+          # 需要检查有没有地理坐标这个参数
+          pass
+      try:
+          return list(self.coorodinate_table)
+      except:
+          self.get_coorodinate_table_from_raw()
+          return list(self.coorodinate_table)
+    
+
+  def cal_table_and_matrix(self,requireTable=True,requireMatrix=True):
     if self.EDGE_WEIGHT_TYPE == "EXPLICIT":
-      self.matrix = self.get_adjacency_matrix()
-      if self.debug:
-        print("矩阵",self.matrix)
-      self.table = self.matrix_2_table()
+      if not requireTable:
+        self.matrix = self.get_adjacency_matrix()
+      else:
+        self.matrix = self.get_adjacency_matrix()
+        if self.debug:
+          print("矩阵",self.matrix)
+        self.table = self.matrix_2_table(self.matrix)
+
     else:
       # 获取 self.coorodinate_table 城市坐标表
       self.get_coorodinate_table_from_raw()
@@ -153,13 +241,12 @@ class TSP_DATA:
       if requireTable and requireMatrix:
         # 两种方法，一种由 邻接表 转化
         self.table = self.coordinate_2_table()
-        self.matrix = self.table_2_matrix()
+        self.matrix = self.table_2_matrix(self.table)
       elif requireMatrix:
         # 一种由坐标直接到表
         self.matrix = self.coordinate_2_matrix()
       elif requireTable:
         self.table = self.coordinate_2_table()
-
 
   def get_data_list(self, data_all):
     """ 返回数字数据，被关键字和EOF包裹。不做其他处理
@@ -211,7 +298,7 @@ class TSP_DATA:
         # todo 中间是不是要人为加空格
         string_data = string_data + " " + data_all[0][h]
       string_data_split = string_data.strip().split(' ')
-      list_data =  [float(i) for i in string_data_split if i.isdigit()]
+      list_data =  [float(i) for i in string_data_split if bool(re.search(r'\d',i))]
       if self.debug:
         print(string_data_split)
         print(list_data)
@@ -221,6 +308,7 @@ class TSP_DATA:
       # if not 'NODE_COORD_SECTION' in data_all[0]:
       #   raise Exception("NODE_COORD_SECTION 关键字未找到")
       for i in range(10):
+        # 或者是：index = lines.index('NODE_COORD_SECTION\n') 但是慢一点
         beging_line = beging_line+1
         if 'NODE_COORD_SECTION' in data_all[0][i]:
           break
@@ -252,6 +340,9 @@ class TSP_DATA:
 
   # 获取表头数据规约
   def get_headline(self, raw_data):
+    '''
+    实现方法：可以用 index = lines.index('NODE_COORD_SECTION\n')
+    '''
     head_dict = {}
     head_index = 0
     # 获取字母表头(好像没啥用，但是逻辑更通畅了)
@@ -266,16 +357,16 @@ class TSP_DATA:
       if ':' not in raw_data[0][i]:
         break
       # 构建字典
-      head_dict[raw_data[0][i].split(':')[0]] = raw_data[0][i].split(':')[1]
+      head_dict[raw_data[0][i].split(':')[0].strip()] = raw_data[0][i].split(':')[1].strip()
     
     # 从字典获取信息，去掉左右空格
-    self.NAME = head_dict['NAME'].strip()
-    self.TYPE = head_dict['TYPE'].strip()
-    self.DIMENSION = int(head_dict['DIMENSION'].strip())
-    self.EDGE_WEIGHT_TYPE = head_dict['EDGE_WEIGHT_TYPE'].strip()
+    self.NAME = head_dict['NAME']
+    self.TYPE = head_dict['TYPE']
+    self.DIMENSION = int(head_dict['DIMENSION'])
+    self.EDGE_WEIGHT_TYPE = head_dict['EDGE_WEIGHT_TYPE']
     if self.TYPE == "CVRP": 
       # 载货问题时，需要卡车容量
-      self.CAPACITY = head_dict['CAPACITY'].strip()
+      self.CAPACITY = head_dict['CAPACITY']
     else:
       pass
 
@@ -283,10 +374,10 @@ class TSP_DATA:
       # 距离在raw code中指定的情况下，要给出邻接矩阵存放方式
       # 数据开头  EDGE_WEIGHT_SECTION
       # 比如 UPPER_DIAG_ROW 上三角矩阵
-      self.EDGE_WEIGHT_FORMAT = head_dict['EDGE_WEIGHT_FORMAT'].strip()
+      self.EDGE_WEIGHT_FORMAT = head_dict['EDGE_WEIGHT_FORMAT']
     else:
       if 'NODE_COORD_TYPE' in head_dict.keys():
-        self.NODE_COORD_TYPE = head_dict['NODE_COORD_TYPE'].strip()
+        self.NODE_COORD_TYPE = head_dict['NODE_COORD_TYPE']
       # 但实际很多都没有
       # 理论上要满足： NODE_COORD_TYPE (required if EDGE_WEIGHT_TYPE is not WeightKind::Explicit): specifies how the coordinate for each node is given in the file. Represented by the enum CoordKind.
       # 数据开头：  NODE_COORD_SECTION
@@ -298,7 +389,9 @@ class TSP_DATA:
     if not os.path.isfile(thispath):
       raise Exception('数据读取报错，地址非文件')
     # 读取文件 raw数据
-    df = pd.read_csv(thispath,header=None)
+    # 报错 ParserError: Error tokenizing data. C error: Expected 1 fields in line 3, saw 4
+    # https://blog.csdn.net/qq_33267306/article/details/120284044
+    df = pd.read_csv(thispath,header=None,error_bad_lines=False)
     # 文件名
     if check_sys == 'Linux':   # colab address
       name = thispath.split('/')[-1].split('.')[0]
@@ -344,28 +437,39 @@ class TSP_DATA:
       Custom    用户定义的距离函数。
       Undefined  没有给出距离函数。
     '''
+    this_x = self.coorodinate_table[a][0]
+    this_y = self.coorodinate_table[a][1]
+    next_x = self.coorodinate_table[b][0]
+    next_y = self.coorodinate_table[b][1]
+
     if self.EDGE_WEIGHT_TYPE == "EUC_2D" or self.EDGE_WEIGHT_TYPE =="GEO":
-      distance = (self.coorodinate_table[a][0]-self.coorodinate_table[b][0])**2+\
-      (self.coorodinate_table[a][1]-self.coorodinate_table[b][1])**2
+      distance = (this_x - next_x)**2+\
+            (this_y - next_y)**2
 
     elif self.EDGE_WEIGHT_TYPE == "EUC_3D":
-      distance = abs((self.coorodinate_table[a][0]-self.coorodinate_table[b][0])**3+\
-      (self.coorodinate_table[a][1]-self.coorodinate_table[b][1])**3)
+      distance = abs((this_x - next_x)**3+\
+              (this_y - next_y)**3)
 
     elif self.EDGE_WEIGHT_TYPE == "EXPLICIT":
       raise Exception("EXPLICIT距离必须由raw data的邻接矩阵给出")
 
     elif self.EDGE_WEIGHT_TYPE == "MAN_2D":
-      distance = abs((self.coorodinate_table[a][0]-self.coorodinate_table[a][1])**2-\
-      (self.coorodinate_table[b][0]-self.coorodinate_table[b][1])**2)
+      distance = abs((this_x - next_x ) + \
+              abs(this_y - next_y))
 
     elif self.EDGE_WEIGHT_TYPE == "MAN_3D":
-      distance = abs((self.coorodinate_table[a][0]-self.coorodinate_table[a][1])**3-\
-      (self.coorodinate_table[b][0]-self.coorodinate_table[b][1])**3)
+      distance = abs((this_x - this_y)**3-\
+              (next_x - next_y)**3)
 
     elif self.EDGE_WEIGHT_TYPE == "CEIL_2D":
-      distance = int((self.coorodinate_table[a][0]-self.coorodinate_table[b][0])**2+\
-      (self.coorodinate_table[a][1]-self.coorodinate_table[b][1])**2) + 1
+      distance = int((this_x - next_x)**2+\
+              (this_y - next_y)**2) + 1
+    
+    elif self.EDGE_WEIGHT_TYPE == "MAX_2D":
+      distance = max(abs(this_y - next_y), abs(this_x - next_x))
+    
+    elif self.EDGE_WEIGHT_TYPE == "ATT":
+      distance = round((this_x - next_x)**2+(this_y - next_y)**2)
     else: # 都不符合
       raise Exception("此类型距离未定义")
     return distance
@@ -434,20 +538,23 @@ class TSP_DATA:
 
     # 上三角，不包含对角全0
     elif self.EDGE_WEIGHT_FORMAT == "UPPER_ROW":
+      """
+      213 145  36
+      94 217
+      162
+      """
       # 数据长度应该是：d + d-1 + d-2 +...+ 1 = (1+d)*d/2
       d = self.DIMENSION
       if not len(self.rawnum) == int((1+d)*d/2-d):
         raise Exception("获取的raw num数据量不对")
       for i in range(d):
-        # 由于自己有0，第一行填1个0，第二行补2个，第n行补n个
+        # 由于自己没0，第一行填1个0，第二行补2个，第n行补n+1个
         row = [0 for j in range(i+1)]
         # left = sum 0 d-1 d-2 
-        if i == 0:
-          left = 0
-        else:
-          left = int( d*(i-1) -(i-1)*i/2 )
+        left = int( d*i -(1+i)*i/2 )
         # right = sum d-1 d-2 d-3 ... = int(d*i -(1+i)i/2)
-        right = int( d*i -(1+i)*i/2 )
+        # right = int( d*i -(1+i)*i/2 )
+        right = int( d*(i+1) -(2+i)*(i+1)/2 )
         row = row + self.rawnum[left : right]
         matrix.append(row)
       # 上三角补全到完整矩阵
@@ -545,6 +652,9 @@ class TSP_DATA:
           matrix = (np.triu(m, k=1).T + np.triu(m, k=0)).tolist()
       else:
         raise Exception("储存矩阵形式为定义，且未辨识成功，长度不符合已有类型")
+    else:
+      print(self.EDGE_WEIGHT_FORMAT)
+      raise Exception("储存矩阵形式不支持")
 
     return matrix
   
@@ -601,9 +711,9 @@ class TSP_DATA:
         thisRow = []
         for j in range(1,1+self.DIMENSION):
           if i<j: #上三角
-            thisRow.appned(self.cal_a_distance_by_coordinate(i,j))
+            thisRow.append(self.cal_a_distance_by_coordinate(i,j))
           else:
-            thisRow.appned(0)
+            thisRow.append(0)
         whole_matrix.append(thisRow)
       # 上三角补全到完整矩阵
       m = np.array(whole_matrix)
@@ -612,7 +722,7 @@ class TSP_DATA:
       for i in range(1,1+self.DIMENSION):
         thisRow = []
         for j in range(1,1+self.DIMENSION):
-          thisRow.appned(self.cal_a_distance_by_coordinate(i,j))
+          thisRow.aooend(self.cal_a_distance_by_coordinate(i,j))
         whole_matrix.append(thisRow)
 
     return whole_matrix
@@ -627,7 +737,7 @@ class TSP_DATA:
     for i in range(1,1+self.DIMENSION):
       thisRow = []
       for j in range(1,1+self.DIMENSION):
-        thisRow.appned(table[(i,j)])
+        thisRow.append(table[(i,j)])
       whole_matrix.append(thisRow)
 
     return whole_matrix
@@ -644,10 +754,58 @@ class TSP_DATA:
         whole_table[(i,j)] = matrix[i-1][j-1]
 
     return whole_table
+  
+  # 检查数据合理性
+  def check_if_reasonable(self):
+    """
+      检查表头信息识别是否有误
+      检查基本逻辑信息
+    """
+    if self.TYPE == "ATSP":
+      # ATSP只可能用矩阵来保存
+      assert self.EDGE_WEIGHT_TYPE == "EXPLICIT"
 
-a = TSP_DATA(file_tsp[1])
+    if self.TYPE == "TSP":
+      # TSP产生的矩阵只可能是对称矩阵
+      assert self.check_if_summetry(self.matrix),"邻接矩阵非对称"
 
-"""## 验证数据、测试算法小模块"""
+    return True  
+
+  def check_if_summetry(matrix):
+    X = np.array(matrix)
+    X = np.triu(X)
+    X += X.T - np.diag(X.diagonal())
+    # 保证所有元素相同
+    return (X.T == X).all()
+  
+  def get_best_result_from_web(url = 'http://elib.zib.de/pub/mp-testdata/tsp/tsplib/stsp-sol.html'):
+    resp = requests.get(url = url)
+    html = resp.text
+    soup = BeautifulSoup(html,"html.parser")
+    best_res_dict={}
+    try:
+      title_url_Date=soup.find_all('li')
+      #a=title_url_Date[0]
+      
+      for i in title_url_Date:
+        txt_content = i.text
+        # 有的数据解有两个。。。
+        # ValueError: invalid literal for int() with base 10: '[468942,469935]'
+        try:
+            best_res_dict[txt_content.split(':')[0].strip()] = int(txt_content.split(':')[1].strip())
+        except:
+            print("网页抓到异常数据")
+      print("当前最好的解",best_res_dict)
+                    
+    except:
+    	print("未发现目标元素")
+     
+    return best_res_dict
+
+"""a=[]
+a.append([1,2])
+
+## 验证数据、测试算法小模块
 
 # 测试二维字典
 tst_dict = {
@@ -672,8 +830,9 @@ for i in range(d):
   print((i*d-(0+i-1)*i/2)-1,((i+1)*d-(0+i)*(i+1)/2)-1)
   type(((i+1)*d-(0+i)*(i+1)/2))
   print([i for i in range(15)][int(i*d-(0+i-1)*i/2 -1) : int((i+1)*d-(0+i)*(i+1)/2 -1)])
+"""
 
-TSP_DATA(file_tsp[0])
+
 
 """#### 例子
 
@@ -697,8 +856,6 @@ EDGE_WEIGHT_TYPE : EUC_2D 邻接表法
 ```
 """
 
-tsp = file_tsp[2]
-tsp
 
 """报错：EUC_2D和EXPLICIT
 

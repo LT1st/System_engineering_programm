@@ -3,13 +3,18 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
+import sys
+sys.path.append('..')
+from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
+
 
 ## 动态规划法
 class DP(object):
     def __init__(self, num_city, num_total, iteration, data):
         self.num_city = num_city
-        self.location = data
-        self.dis_mat = self.compute_dis_mat(num_city, data)
+        #self.location = data
+        self.dis_mat = np.array(data)
+        #self.dis_mat = self.compute_dis_mat(num_city, data)
 
     # 计算不同城市之间的距离
     def compute_dis_mat(self, num_city, location):
@@ -70,33 +75,9 @@ class DP(object):
 
             tmppath = tmppath[0:insert] + [c] + tmppath[insert:]
             tmplen = minlen
-        return self.location[tmppath], tmplen
+        return tmppath, tmplen
 
-
-# 读取数据
-def read_tsp(path):
-    lines = open(path, 'r').readlines()
-    assert 'NODE_COORD_SECTION\n' in lines
-    index = lines.index('NODE_COORD_SECTION\n')
-    data = lines[index + 1:-1]
-    tmp = []
-    for line in data:
-        line = line.strip().split(' ')
-        if line[0] == 'EOF':
-            continue
-        tmpline = []
-        for x in line:
-            if x == '':
-                continue
-            else:
-                tmpline.append(float(x))
-        if tmpline == []:
-            continue
-        tmp.append(tmpline)
-    data = tmp
-    return data
-
-
+"""
 data = read_tsp('data/st70.tsp')
 data = np.array(data)
 data = data[:, 1:]
@@ -110,3 +91,15 @@ Best_path = np.vstack([Best_path, Best_path[0]])
 plt.plot(Best_path[:, 0], Best_path[:, 1])
 plt.title('st70:动态规划规划结果')
 plt.show()
+"""
+
+if __name__ == "__main__":
+    datapath = r'D:\0latex\System_engineering_programm\code\collection_from_web\data\st70.tsp'
+    data = TSP_DATA(datapath)
+    model = DP(num_city=data.DIMENSION, num_total=25, iteration=500, data=data.matrix)
+    path, path_len = model.run()
+    # 画图
+"""    iterations = model.iter_x
+    best_record = model.iter_y
+    plt.plot(iterations,best_record)
+    plt.show()"""

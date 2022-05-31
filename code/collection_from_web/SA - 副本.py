@@ -3,30 +3,25 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-import sys
-sys.path.append('..')
-from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
 
 class SA(object):
-    def __init__(self, num_city, mat):
+    def __init__(self, num_city, data):
         self.T0 = 4000
         self.Tend = 1e-3
         self.rate = 0.9995
         self.num_city = num_city
         self.scores = []
-        #self.location = data
+        self.location = data
         # fruits中存每一个个体是下标的list
         self.fires = []
-        #self.dis_mat = self.compute_dis_mat(num_city, data)
-        self.dis_mat = np.array(mat)
+        self.dis_mat = self.compute_dis_mat(num_city, data)
         self.fire = self.greedy_init(self.dis_mat,100,num_city)
         # 显示初始化后的路径
         init_pathlen = 1. / self.compute_pathlen(self.fire, self.dis_mat)
-        #init_best = self.location[self.fire]
+        init_best = self.location[self.fire]
         # 存储存储每个温度下的最终路径，画出收敛图
         self.iter_x = [0]
         self.iter_y = [1. / init_pathlen]
-        
     def greedy_init(self, dis_mat, num_total, num_city):
         start_index = 0
         result = []
@@ -146,7 +141,7 @@ class SA(object):
 
     def run(self):
         best_length, best_path = self.sa()
-        return best_path, best_length
+        return self.location[best_path], best_length
 
 
 # 读取数据
@@ -172,7 +167,7 @@ def read_tsp(path):
     data = tmp
     return data
 
-'''
+
 data = read_tsp('data/st70.tsp')
 
 data = np.array(data)
@@ -182,9 +177,7 @@ Best, Best_path = math.inf, None
 
 model = SA(num_city=data.shape[0], data=data.copy())
 path, path_len = model.run()
-
 print(path_len)
-print(path)
 if path_len < Best:
     Best = path_len
     Best_path = path
@@ -201,18 +194,3 @@ axs[1].plot(iterations, best_record)
 axs[1].set_title('收敛曲线')
 plt.show()
 
-'''
-
-if __name__ == "__main__":
-    import sys
-    sys.path.append('..')
-    from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
-    datapath = r'D:\0latex\System_engineering_programm\code\collection_from_web\data\st70.tsp'
-    data = TSP_DATA(datapath)
-    model = SA(num_city = data.DIMENSION , mat = data.matrix)
-    path, path_len = model.run()
-    # 画图
-    iterations = model.iter_x
-    best_record = model.iter_y
-    plt.plot(iterations,best_record)
-    plt.show()

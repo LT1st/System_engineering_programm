@@ -14,7 +14,8 @@ class Node(object):
         self.bound = bound
 
     def __cmp__(self, other):
-        return cmp(self.bound, other.bound)
+        #return cmp(self.bound, other.bound)
+        pass
     def __lt__(self, other):  # operator <
         return self.bound < other.bound
     def __str__(self):

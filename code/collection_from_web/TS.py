@@ -23,6 +23,7 @@ class TS(object):
         # 存储结果，画出收敛图
         self.iter_x = [0]
         self.iter_y = [1. / init_pathlen]
+        
     def greedy_init(self, dis_mat, num_total, num_city):
         start_index = 0
         result = []
