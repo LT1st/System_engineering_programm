@@ -192,6 +192,38 @@ class TSP_DATA:
       print("原始数据：",self.rawnum)
     # 计算邻接矩阵 和 邻接表
     self.cal_table_and_matrix()
+
+    
+  def ATSP2TSP_np(self):
+    """
+    # 使用numpy ATSP 转换 TSP 注意矩阵规模翻倍了
+    # 为了使算法方便观察，没有使用节省内存和更快的写法，
+    # 但减少中间变量和新建数组，会显著加快程序运行
+    """
+    self.TYPE = "TSP"
+    self.DIMENSION = self.DIMENSION * 2
+
+    matrix = np.array(self.matrix)
+    # 需要四个矩阵
+    # left up
+    lu = np.ones_like(matrix)*(10000)
+    # ringt up 
+    ru = matrix.T
+    # right down
+    rd = np.ones_like(matrix)*(10000)
+    # 拼接矩阵
+    # 先竖着拼接
+    left = np.concatenate((lu,matrix),axis=0)
+    right = np.concatenate((ru,rd),axis=0)
+    # 整体拼接
+    self.matrix = np.concatenate((left, right),axis=1).tolist()
+    # 如果有其他，需要更新状态#todo
+    try:
+      if hasattr(self,"table"):
+        self.cal_table_and_matrix(requireMatrix=False)
+    except:
+      pass
+
     
   def get_matrix(self):
       """从外界获取矩阵的接口

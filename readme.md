@@ -6,6 +6,11 @@
 - 思维导图笔记：Xmind
 - 文献管理：Zeotero
 
+# BUG
+
+- [ ] i=j时候计算距离应该是 inf 需要定义一个很大值
+- [ ] 加入直接可视化 networkx
+- [ ] ATSP转换TSP后，需要内部状态改变
 # 代码说明
 - 算法设计阶段使用了jupyter notenook，请开启服务后打开文件。同时也提供线上运行环境，论文中会给出colab连接。
 - 工程化实现使用python类和包结构
