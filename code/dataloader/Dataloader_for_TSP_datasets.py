@@ -11,6 +11,14 @@ Original file is located at
 
 # 自动切换网上平台或者本地路径
 import platform
+import os
+import glob
+import pandas as pd
+import numpy as np
+import re
+import requests 
+from bs4 import BeautifulSoup
+
 check_sys = platform.system()
 if check_sys == 'Linux':   # colab address
   # 从GoogLe Drive获取数据集，更换本地，需要data使用本地路径
@@ -23,14 +31,6 @@ elif check_sys == 'Windows': # local address
   data_folder = './data/'
 else:
   raise EnvironmentError
-
-import os
-import glob
-import pandas as pd
-import numpy as np
-import re
-import requests 
-from bs4 import BeautifulSoup
 
 # 文件路径拼接
 tsp_data_path = os.path.join(data_folder,'*.tsp.gz')
@@ -164,7 +164,7 @@ class TSP_DATA:
   '''
   # 初始化，读取数据，并获取表头的数据规约
   @timmer_TSP_DATA_init # 专属修饰器，获得此方法运行时间，每次清空需要重新载入此类
-  def __init__(self, path, requireTable=True, requireMatrix=True):
+  def __init__(self, path, requireTable=True, requireMatrix=True, load_now =True):
     """传入单个数据地址，读取并且加载数据的表头
     path:
       单个测试样例的数据地址
@@ -191,7 +191,8 @@ class TSP_DATA:
     if self.debug:
       print("原始数据：",self.rawnum)
     # 计算邻接矩阵 和 邻接表
-    self.cal_table_and_matrix()
+    if load_now:
+      self.cal_table_and_matrix(requireTable=requireTable, requireMatrix=requireMatrix)
 
     
   def ATSP2TSP_np(self):
@@ -834,6 +835,36 @@ class TSP_DATA:
 
     return best_res_dict
 # 这里出现了问题，考虑到删除掉之前加入的几个函数？
+
+
+def TSP_load(path, requireTable=True, requireMatrix=True, load_now =True):
+  """传入单个数据地址，读取并且加载数据的表头
+  path:
+    单个测试样例的数据地址
+  requireTable:
+    需要邻接表？
+  requireMatrix：
+    需要邻接矩阵？  
+  """
+  tsp = TSP_DATA(path,  requireTable=True, requireMatrix=True, load_now =True)
+  return tsp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
