@@ -163,7 +163,7 @@ class TSP_DATA:
 
   '''
   # 初始化，读取数据，并获取表头的数据规约
-  @timmer_TSP_DATA_init # 专属修饰器，获得此方法运行时间，每次清空需要重新载入此类
+  #@timmer_TSP_DATA_init # 专属修饰器，获得此方法运行时间，每次清空需要重新载入此类
   def __init__(self, path, requireTable=True, requireMatrix=True, load_now =True):
     """传入单个数据地址，读取并且加载数据的表头
     path:
