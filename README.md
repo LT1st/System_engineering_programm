@@ -13,6 +13,7 @@ System engineering programming in 2022 spring. Aiming to design a alograthm for 
 The documentation include proposal, mid-term and a final report. All the papers are written in latex.
 
 # Usage
-'''python
+```python
 pip install -i https://test.pypi.org/simple/ TSP-dataloader==0.0.1
-'''
+```
+
