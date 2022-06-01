@@ -28,11 +28,36 @@
 - 利用networkx库，解决了大多数TSP测试样例未提供坐标，无法可视化的问题
 - 根据加载器类*TSP_DATA*返回可视化数据，数据接口无需调整
 
-## collection_from_web
+## collection_from_web 算法合集
 - 存放网络上找到的TSP求解算法。由于时间有限，又想测试尽可能多的算法，因此使用了部分网络开源代码
 
-## 🌟my_algorithm
+## 🌟my_algorithm 算法合集
 - 存放我写的算法代码
+## TSP_dataloader_package 开源的py-pi库
+### 使用方法
+```bash
+::在控制台输入安装
+pip install -i https://test.pypi.org/simple/ TSP-dataloader
+```
+
+### 维护方法
+0. 改版本号，维护setup.py
+1. 打包
+```bash
+::在控制台输入
+python setup.py sdist bdist_wheel
+```
+2. 上传到测试环境
+```bash
+::在控制台输入 当前文件夹路径与setpy.py一致
+python3 -m twine upload --repository testpypi dist/*
+
+::使用测试环境
+python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps example-pkg-YOUR-USERNAME #其中 example-pkg-YOUR-USERNAME 即自己指定的包名
+```
+3. 发布正式包
+python -m twine upload --repository testpypi dist/* -u __token__  -p pypi-密码在qq收藏备份 --verbose
+
 
 # 其他文件夹
 - 记录课程的开题、中期、答辩。使用$Latex$编写。
