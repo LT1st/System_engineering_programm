@@ -96,15 +96,34 @@ for sample in samples:
     DP_dict[data.NAME] = path_len
 ```
 ## 4. Try some ADVANCED method
+alternative input to make load quicker
+```python
+def TSP_load(path, requireTable=True, requireMatrix=True, load_now =True):
+  """传入单个数据地址，读取并且加载数据的表头
+  path:
+    单个测试样例的数据地址
+  requireTable:
+    需要邻接表？
+  requireMatrix：
+    需要邻接矩阵？  
+  """
+```
 check if the matrix is summetry.
 ```python
-check_if_summetry(matrix_to_be_checked)
+data_class.check_if_summetry(matrix_to_be_checked)
 ```
 Get best result from web. Return a dict indexed by NAME.
 ```python
-dict_best_result = get_best_result_from_web()
+data_class.dict_best_result = get_best_result_from_web()
 ```
-
+Convert ATSP to TSP.
+```python
+data_class.ATSP2TSP_np()
+```
+check if any inner-class variable wrong 
+```python
+data_class.check_if_reasonable()
+```
 # TODO
 - [ ] Add timmer across files. Using another func?
 - [ ] 画图
