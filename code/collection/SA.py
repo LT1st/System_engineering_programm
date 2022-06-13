@@ -177,8 +177,10 @@ if __name__ == "__main__":
     sys.path.append('..')
     from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
     datapath = r'D:\0latex\System_engineering_programm\code\collection_from_web\data\st70.tsp'
+    # 获取数据加载类
     data = TSP_DATA(datapath)
     model = SA(num_city = data.DIMENSION , mat = data.matrix)
+    # 运行算法
     path, path_len = model.run()
     # 画图
     iterations = model.iter_x
