@@ -3,15 +3,19 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
+import sys
+sys.path.append('..')
+from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
+
 
 class PSO(object):
     def __init__(self, num_city, data):
         self.iter_max = 500  # 迭代数目
         self.num = 200  # 粒子数目
         self.num_city = num_city  # 城市数
-        self.location = data # 城市的位置坐标
+        #self.location = data # 城市的位置坐标
         # 计算距离矩阵
-        self.dis_mat = self.compute_dis_mat(num_city, self.location)  # 计算城市之间的距离矩阵
+        self.dis_mat = data  # 计算城市之间的距离矩阵
         # 初始化所有粒子
         # self.particals = self.random_init(self.num, num_city)
         self.particals = self.greedy_init(self.dis_mat,num_total=self.num,num_city =num_city)
@@ -21,7 +25,7 @@ class PSO(object):
         init_index = self.lenths.index(init_l)
         init_path = self.particals[init_index]
         # 画出初始的路径图
-        init_show = self.location[init_path]
+        #init_show = self.location[init_path]
         # 记录每个个体的当前最优解
         self.local_best = self.particals
         self.local_best_len = self.lenths
@@ -34,6 +38,7 @@ class PSO(object):
         # 存储每次迭代的结果，画出收敛图
         self.iter_x = [0]
         self.iter_y = [init_l]
+
     def greedy_init(self, dis_mat, num_total, num_city):
         start_index = 0
         result = []
@@ -208,7 +213,7 @@ class PSO(object):
     def run(self):
         best_length, best_path = self.pso()
         # 画出最终路径
-        return self.location[best_path], best_length
+        return best_path, best_length
 
 
 # 读取数据
@@ -235,26 +240,39 @@ def read_tsp(path):
     return data
 
 
-data = read_tsp('data/st70.tsp')
+# data = read_tsp('data/st70.tsp')
 
-data = np.array(data)
-data = data[:, 1:]
-# 加上一行因为会回到起点
-show_data = np.vstack([data, data[0]])
+# data = np.array(data)
+# data = data[:, 1:]
+# # 加上一行因为会回到起点
+# show_data = np.vstack([data, data[0]])
 
-model = PSO(num_city=data.shape[0], data=data.copy())
-Best_path, Best = model.run()
+# model = PSO(num_city=data.shape[0], data=data.copy())
+# Best_path, Best = model.run()
 
-Best_path = np.vstack([Best_path, Best_path[0]])
-fig, axs = plt.subplots(2, 1, sharex=False, sharey=False)
-axs[0].scatter(Best_path[:, 0], Best_path[:,1])
-Best_path = np.vstack([Best_path, Best_path[0]])
-axs[0].plot(Best_path[:, 0], Best_path[:, 1])
-axs[0].set_title('规划结果')
-iterations = model.iter_x
-best_record = model.iter_y
-axs[1].plot(iterations, best_record)
-axs[1].set_title('收敛曲线')
-plt.show()
+# Best_path = np.vstack([Best_path, Best_path[0]])
+# fig, axs = plt.subplots(2, 1, sharex=False, sharey=False)
+# axs[0].scatter(Best_path[:, 0], Best_path[:,1])
+# Best_path = np.vstack([Best_path, Best_path[0]])
+# axs[0].plot(Best_path[:, 0], Best_path[:, 1])
+# axs[0].set_title('规划结果')
+# iterations = model.iter_x
+# best_record = model.iter_y
+# axs[1].plot(iterations, best_record)
+# axs[1].set_title('收敛曲线')
+# plt.show()
 
+if __name__ == "__main__":
+    import sys
+    sys.path.append('..')
+    from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
+    datapath = r'D:\0latex\System_engineering_programm\code\collection_from_web\data\st70.tsp'
+    data = TSP_DATA(datapath)
+    model = PSO(num_city = data.DIMENSION , mat = data.matrix)
+    path, path_len = model.run()
+    # 画图
+    iterations = model.iter_x
+    best_record = model.iter_y
+    plt.plot(iterations,best_record)
+    plt.show()
 

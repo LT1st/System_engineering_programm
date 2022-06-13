@@ -36,8 +36,6 @@ from tqdm import tqdm, trange
 
 """#  数据集"""
 
-!dir
-
 """旅行推销员问题
 这是旅行商问题的绘图解决方案的示例
 
@@ -45,69 +43,6 @@ from tqdm import tqdm, trange
 
 https://networkx.org/documentation/stable/auto_examples/drawing/plot_tsp.html#sphx-glr-auto-examples-drawing-plot-tsp-py
 """
-
-import matplotlib.pyplot as plt
-import networkx as nx
-import networkx.algorithms.approximation as nx_app
-import math
-
-G = nx.random_geometric_graph(20, radius=0.4, seed=3)
-pos = nx.get_node_attributes(G, "pos")
-
-# Depot should be at (0,0)
-pos[0] = (0.5, 0.5)
-
-H = G.copy()
-
-
-# Calculating the distances between the nodes as edge's weight.
-for i in range(len(pos)):
-    for j in range(i + 1, len(pos)):
-        dist = math.hypot(pos[i][0] - pos[j][0], pos[i][1] - pos[j][1])
-        dist = dist
-        G.add_edge(i, j, weight=dist)
-
-cycle = nx_app.christofides(G, weight="weight")
-edge_list = list(nx.utils.pairwise(cycle))
-
-# Draw closest edges on each node only
-nx.draw_networkx_edges(H, pos, edge_color="blue", width=0.5)
-
-# Draw the route
-nx.draw_networkx(
-    G,
-    pos,
-    with_labels=True,
-    edgelist=edge_list,
-    edge_color="red",
-    node_size=200,
-    width=3,
-)
-
-print("The route of the traveller is:", cycle)
-plt.show()
-
-import networkx as nx
-import matplotlib.pyplot as plt
-import numpy as np
-
-G = nx.Graph()
-vertex_list = ['v1', 'v2', 'v3', 'v4', 'v5', 'v6']
-distance_matrix = np.array([
-    [0, 56, 35, 2, 51, 60],
-    [56, 0, 21, 57, 78, 70],
-    [35, 21, 0, 36, 68, 68],
-    [2, 57, 36, 0, 51, 61],
-    [51, 78, 68, 51, 0, 13],
-    [60, 70, 68, 61, 13, 0]
-])
-G_list = [(vertex_list[i], vertex_list[j], distance_matrix[i, j]) for i in range(6) for j in range(6)]
-G.add_weighted_edges_from(G_list)
-edge_labels = dict([((u, v), d['weight']) for u, v, d in G.edges(data=True)])
-pos = nx.spring_layout(G)
-nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=10)
-nx.draw_networkx(G, pos, node_size=400)
-plt.show()
 
 # 定义一个修饰器函数用来统计函数的运行时间
 # 参考我的csdn  https://blog.csdn.net/prinTao/article/details/121800857?spm=1001.2014.3001.5501
@@ -176,11 +111,9 @@ thisFile = data
 tab = creatematrix_ATSP(thisFile)
 tab_np = np.array(tab)
 
-tab
 
 tab_list = list(tab_np)
 
-tab_np.shape
 
 import warnings
 warnings.simplefilter('always')
@@ -500,10 +433,6 @@ def greedy_initial_route(all_cities):
 newlist = list(range(city_Num))
 random.shuffle(newlist)
 
-A,B=  greedy_initial_route(newlist)
-B
-
-len(A)
 
 """bremain_cities"""
 
@@ -977,168 +906,3 @@ for i in range(50):
   _,res,_ = run(thisSolution, thisLength, 20, 40, 8000, True, False)
   b.append(res)
 a,b
-
-"""# 其他实验
-
-'''
-执行一次搜索算法
-''' 
-优化过程
-interate_procedure = []
-
-for cnt in range(maxIter):
-    if cnt == 0:
-    # 初始化禁忌表
-      append_table(banned_Table, initlength, [1,2], tabLength)
-      #continue
-    # 接受解？
-    isAccept = False
-    # 按照规则寻找所有邻域，生成二维数组
-    # 应该是随机选取
-    # axis0为一种方法 axis1为对应的交换
-    # 需要交换被记录
-    gen = generate_neighborhood(thisSolution)
-    exchanged_list = gen['state']
-    after_exchange_list = gen['tab']
-    
-    #print(len(gen['state']))
-    # 获取对应所有领域的路径长度
-    len_list = cal_length_in_tab(gen['tab'])
-
-    # total = [after_exchange_list,exchanged_list,len_list] 
-    # total_rank = total.sort(key= lambda x:x[2]) 
-    c = list(zip(after_exchange_list,exchanged_list,len_list))  # 将a,b整体作为一个zip,每个元素一一对应后打乱
-    c.sort(key=lambda x: x[:][2])
-    #after_exchange_list[:],exchanged_list[:],len_list[:] = zip(*c) # 将打乱的c解开  
-
-    # 相当于 
-    k = 0
-    
-    # 获取最优解
-    # best_index_now, best_value_now = get_best_index(len_list)
-    best_index_now, best_value_now = k, c[k][2]
-    # 最优解对应的交换方式
-    #exchanged_couple = exchanged_list[best_index_now]
-    exchanged_couple = c[k][1]
-
-    print('best_value_now:', best_value_now)
-
-    
-    # 最优破禁
-    if min([x[1] for x in banned_Table]) > best_value_now :
-        isAccept = True
-    # 本轮最好解都没达到以前的
-    else:
-      # 判断并且更新最优解
-      # 破禁检查 
-      
-      for k in range(1,len(exchanged_list)):
-        isExist = check_state_in_banned_table(c[k][1])
-        if not isExist:
-          # 接受解为当前的k
-          isAccept = True
-          break
-
-        elif isExist:
-          # 寻找次优解
-          # total
-          if random.random() < random_accept:
-            isAccept = True
-            break
-
-
-      # 表没满，无条件增加
-      # if tabLength > len(banned_Table):
-      #     banned_Table = append_table(banned_Table, best_value_now, exchanged_couple, tabLength)
-      # 表满了
-      # else:
-
-      # 利用lambda表达式更新表,重新排序
-      banned_Table.sort(key = lambda x:x[:][1])
-      
-      # 最优破禁
-      # bug 最开始banned table是空的
-      # if min([x[1] for x in banned_Table]) > best_value_now :
-      #     isAccept = True
-          #banned_Table = append_table(banned_Table, best_value_now, exchanged_couple, tabLength)
-      
-      # 按照一定概率加入可能的解
-      # todo 越接近越可能
-      # else:
-      #     if random.random() < random_accept:
-      #         isAccept = True
-              # banned_Table = random_add(banned_Table, best_value_now, exchanged_couple, tabLength)
-              # thisSolution = gen['tab'][best_index_now]
-    if isAccept:
-      thisSolution = gen['tab'][best_index_now]
-      print('best_value_accept:', thisSolution)
-      banned_Table = append_table(banned_Table, best_value_now, exchanged_couple, tabLength)
-      interate_procedure.append(best_value_now)          
-
-print('best_value_final:', best_value_now)
-print(banned_Table)
-print(thisSolution)
-    #banned_Table
-
-p = [1,2,35,6]
-p.sort()
-p
-
-from matplotlib import pyplot as plt
-interate_procedure
-
-'''
-执行一次搜索算法
-''' 
-interate_procedure = []
-for cnt in range(maxIter):
-    # 按照规则寻找所有邻域，生成二维数组
-    # 应该是随机选取
-    # axis0为一种方法 axis1为对应的交换
-    # 需要交换被记录
-    gen = generate_neighborhood(thisSolution)
-    exchanged_list = gen['state']
-    #print(len(gen['state']))
-    # 获取对应所有领域的路径长度
-    len_list = cal_length_in_tab(gen['tab'])
-    #print(len(len_list))
-    
-    # 获取最优解
-    best_index_now, best_value_now = get_best_index(len_list)
-    print('best_value_now:', best_value_now)
-    
-    if len(banned_Table)>0:
-        if min([x[1] for x in banned_Table]) > best_value_now :
-            thisSolution = gen['tab'][best_index_now]
-            interate_procedure.append(best_value_now)
-    
-    # 判断并且更新最优解
-    # 破禁检查
-    exchanged_couple = exchanged_list[best_index_now]
-    # 表没满，无条件增加
-    if tabLength > len(banned_Table):
-        banned_Table = append_table(banned_Table, best_value_now, exchanged_couple, tabLength)
-    # 表满了
-    else:
-        # 利用lambda表达式更新表,重新排序
-        banned_Table.sort(key = lambda x:x[:][1])
-        
-        # 最优破禁
-        # bug 最开始banned table是空的
-        if min([x[1] for x in banned_Table]) > best_value_now :
-            banned_Table = append_table(banned_Table, best_value_now, exchanged_couple, tabLength)
-            interate_procedure.append(best_value_now)
-
-        
-        # 按照一定概率加入可能的解
-        # todo 越接近越可能
-        else:
-            if random.random()< random_accept:
-                banned_Table = random_add(banned_Table, best_value_now, exchanged_couple, tabLength)
-                thisSolution = gen['tab'][best_index_now]
-                
-print('best_value_final:', best_value_now)
-print(banned_Table)
-print(thisSolution)
-    #banned_Table
-"""

@@ -77,21 +77,7 @@ class DP(object):
             tmplen = minlen
         return tmppath, tmplen
 
-"""
-data = read_tsp('data/st70.tsp')
-data = np.array(data)
-data = data[:, 1:]
 
-model = DP(num_city=data.shape[0], num_total=25, iteration=500, data=data.copy())
-Best_path, Best = model.run()
-print('规划的路径长度:{}'.format(Best))
-# 显示规划结果
-plt.scatter(Best_path[:, 0], Best_path[:, 1])
-Best_path = np.vstack([Best_path, Best_path[0]])
-plt.plot(Best_path[:, 0], Best_path[:, 1])
-plt.title('st70:动态规划规划结果')
-plt.show()
-"""
 
 if __name__ == "__main__":
     datapath = r'D:\0latex\System_engineering_programm\code\collection_from_web\data\st70.tsp'
@@ -99,7 +85,3 @@ if __name__ == "__main__":
     model = DP(num_city=data.DIMENSION, num_total=25, iteration=500, data=data.matrix)
     path, path_len = model.run()
     # 画图
-"""    iterations = model.iter_x
-    best_record = model.iter_y
-    plt.plot(iterations,best_record)
-    plt.show()"""

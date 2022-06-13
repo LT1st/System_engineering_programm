@@ -7,23 +7,24 @@ import sys
 sys.path.append('..')
 from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
 
-class SA(object):
-    def __init__(self, num_city, mat):
-        self.T0 = 4000
-        self.Tend = 1e-3
-        self.rate = 0.9995
+
+class TS(object):
+    def __init__(self, num_city, data):
+        self.taboo_size = 5
+        self.iteration = 500
         self.num_city = num_city
-        self.scores = []
         #self.location = data
-        # fruits中存每一个个体是下标的list
-        self.fires = []
-        #self.dis_mat = self.compute_dis_mat(num_city, data)
-        self.dis_mat = np.array(mat)
-        self.fire = self.greedy_init(self.dis_mat,100,num_city)
+        self.taboo = []
+
+        self.dis_mat = np.array(data)
+        self.path = self.greedy_init(self.dis_mat,100,num_city)
+        self.best_path = self.path
+        self.cur_path = self.path
+        self.best_length = self.compute_pathlen(self.path, self.dis_mat)
+
         # 显示初始化后的路径
-        init_pathlen = 1. / self.compute_pathlen(self.fire, self.dis_mat)
-        #init_best = self.location[self.fire]
-        # 存储存储每个温度下的最终路径，画出收敛图
+        init_pathlen = 1. / self.compute_pathlen(self.path, self.dis_mat)
+        # 存储结果，画出收敛图
         self.iter_x = [0]
         self.iter_y = [1. / init_pathlen]
         
@@ -58,6 +59,7 @@ class SA(object):
         sortindex = np.argsort(pathlens)
         index = sortindex[0]
         return result[index]
+        # return result[0]
 
     # 初始化一条随机路径
     def random_init(self, num_city):
@@ -90,7 +92,7 @@ class SA(object):
             result += dis_mat[a][b]
         return result
 
-    # 计算一个温度下产生的一个群体的长度
+    # 计算一个群体的长度
     def compute_paths(self, paths):
         result = []
         for one in paths:
@@ -98,55 +100,58 @@ class SA(object):
             result.append(length)
         return result
 
-    # 产生一个新的解：随机交换两个元素的位置
-    def get_new_fire(self, fire):
-        fire = fire.copy()
-        t = [x for x in range(len(fire))]
-        a, b = np.random.choice(t, 2)
-        fire[a:b] = fire[a:b][::-1]
-        return fire
+    # 产生随机解
+    def ts_search(self, x):
+        moves = []
+        new_paths = []
+        while len(new_paths)<400:
+            i = np.random.randint(len(x))
+            j = np.random.randint(len(x))
+            tmp = x.copy()
+            tmp[i:j] = tmp[i:j][::-1]
+            new_paths.append(tmp)
+            moves.append([i, j])
+        return new_paths, moves
 
-    # 退火策略，根据温度变化有一定概率接受差的解
-    def eval_fire(self, raw, get, temp):
-        len1 = self.compute_pathlen(raw, self.dis_mat)
-        len2 = self.compute_pathlen(get, self.dis_mat)
-        dc = len2 - len1
-        p = max(1e-1, np.exp(-dc / temp))
-        if len2 < len1:
-            return get, len2
-        elif np.random.rand() <= p:
-            return get, len2
-        else:
-            return raw, len1
+    # 禁忌搜索
+    def ts(self):
+        for cnt in range(self.iteration):
+            new_paths, moves = self.ts_search(self.cur_path)
+            new_lengths = self.compute_paths(new_paths)
+            sort_index = np.argsort(new_lengths)
+            min_l = new_lengths[sort_index[0]]
+            min_path = new_paths[sort_index[0]]
+            min_move = moves[sort_index[0]]
 
-    # 模拟退火总流程
-    def sa(self):
-        count = 0
-        # 记录最优解
-        best_path = self.fire
-        best_length = self.compute_pathlen(self.fire, self.dis_mat)
+            # 更新当前的最优路径
+            if min_l < self.best_length:
+                self.best_length = min_l
+                self.best_path = min_path
+                self.cur_path = min_path
+                # 更新禁忌表
+                if min_move in self.taboo:
+                    self.taboo.remove(min_move)
 
-        while self.T0 > self.Tend:
-            count += 1
-            # 产生在这个温度下的随机解
-            tmp_new = self.get_new_fire(self.fire.copy())
-            # 根据温度判断是否选择这个解
-            self.fire, file_len = self.eval_fire(best_path, tmp_new, self.T0)
-            # 更新最优解
-            if file_len < best_length:
-                best_length = file_len
-                best_path = self.fire
-            # 降低温度
-            self.T0 *= self.rate
-            # 记录路径收敛曲线
-            self.iter_x.append(count)
-            self.iter_y.append(best_length)
-            print(count, best_length)
-        return best_length, best_path
+                self.taboo.append(min_move)
+            else:
+                # 找到不在禁忌表中的操作
+                while min_move in self.taboo:
+                    sort_index = sort_index[1:]
+                    min_path = new_paths[sort_index[0]]
+                    min_move = moves[sort_index[0]]
+                self.cur_path = min_path
+                self.taboo.append(min_move)
+            # 禁忌表超长了
+            if len(self.taboo) > self.taboo_size:
+                self.taboo = self.taboo[1:]
+            self.iter_x.append(cnt)
+            self.iter_y.append(self.best_length)
+            print(cnt, self.best_length)
+        print(self.best_length)
 
     def run(self):
-        best_length, best_path = self.sa()
-        return best_path, best_length
+        self.ts()
+        return self.best_path, self.best_length
 
 
 # 读取数据
@@ -172,36 +177,31 @@ def read_tsp(path):
     data = tmp
     return data
 
-'''
-data = read_tsp('data/st70.tsp')
 
-data = np.array(data)
-data = data[:, 1:]
-show_data = np.vstack([data, data[0]])
-Best, Best_path = math.inf, None
+# data = read_tsp('data/st70.tsp')
 
-model = SA(num_city=data.shape[0], data=data.copy())
-path, path_len = model.run()
+# data = np.array(data)
+# plt.suptitle('TS in st70.tsp')
+# data = data[:, 1:]
+# plt.subplot(2, 2, 1)
+# plt.title('raw data')
+# show_data = np.vstack([data, data[0]])
+# plt.plot(data[:, 0], data[:, 1])
 
-print(path_len)
-print(path)
-if path_len < Best:
-    Best = path_len
-    Best_path = path
-# 加上一行因为会回到起点
-Best_path = np.vstack([Best_path, Best_path[0]])
-fig, axs = plt.subplots(2, 1, sharex=False, sharey=False)
-axs[0].scatter(Best_path[:, 0], Best_path[:,1])
-Best_path = np.vstack([Best_path, Best_path[0]])
-axs[0].plot(Best_path[:, 0], Best_path[:, 1])
-axs[0].set_title('规划结果')
-iterations = model.iter_x
-best_record = model.iter_y
-axs[1].plot(iterations, best_record)
-axs[1].set_title('收敛曲线')
-plt.show()
+# model = TS(num_city=data.shape[0], data=data.copy())
+# Best_path, Best_length = model.run()
 
-'''
+# Best_path = np.vstack([Best_path, Best_path[0]])
+# fig, axs = plt.subplots(2, 1, sharex=False, sharey=False)
+# axs[0].scatter(Best_path[:, 0], Best_path[:,1])
+# Best_path = np.vstack([Best_path, Best_path[0]])
+# axs[0].plot(Best_path[:, 0], Best_path[:, 1])
+# axs[0].set_title('规划结果')
+# iterations = model.iter_x
+# best_record = model.iter_y
+# axs[1].plot(iterations, best_record)
+# axs[1].set_title('收敛曲线')
+# plt.show()
 
 if __name__ == "__main__":
     import sys
@@ -209,7 +209,7 @@ if __name__ == "__main__":
     from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
     datapath = r'D:\0latex\System_engineering_programm\code\collection_from_web\data\st70.tsp'
     data = TSP_DATA(datapath)
-    model = SA(num_city = data.DIMENSION , mat = data.matrix)
+    model = TS(num_city = data.DIMENSION , mat = data.matrix)
     path, path_len = model.run()
     # 画图
     iterations = model.iter_x
