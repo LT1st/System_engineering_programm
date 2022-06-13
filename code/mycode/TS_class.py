@@ -43,7 +43,6 @@ random_accept= 0.05
 random_accept
 
 
-
 """# 初始路径生成算法"""
 
 def random_initial_route(remain_cities):
