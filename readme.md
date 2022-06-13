@@ -193,6 +193,7 @@ data_class.check_if_reasonable()
 - [ ] Add timmer across files. Using another func?
 - [ ] 画图
 - [ ] 注意线上版本和给老师的不一样
+- [ ] if '3D' in self.评估 使用三维数据加载器，坐标表间隔设成4
 
 
 # 其他文件夹
