@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 import setuptools #瀵煎叆setuptools鎵撳寘宸ュ叿
  
 with open("README.md", "r", encoding="utf-8") as fh:
