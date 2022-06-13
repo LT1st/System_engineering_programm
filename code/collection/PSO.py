@@ -40,6 +40,14 @@ class PSO(object):
         self.iter_y = [init_l]
 
     def greedy_init(self, dis_mat, num_total, num_city):
+        """    贪婪搜索算法
+        dis_mat：
+            邻接矩阵
+        num_total：
+            搜索次数
+        num_city：
+            城市数
+        """
         start_index = 0
         result = []
         for i in range(num_total):
@@ -68,8 +76,10 @@ class PSO(object):
             start_index += 1
         return result
 
-    # 随机初始化
+    
     def random_init(self, num_total, num_city):
+        """# 随机初始化
+        """
         tmp = [x for x in range(num_city)]
         result = []
         for i in range(num_total):
@@ -77,22 +87,9 @@ class PSO(object):
             result.append(tmp.copy())
         return result
 
-    # 计算不同城市之间的距离
-    def compute_dis_mat(self, num_city, location):
-        dis_mat = np.zeros((num_city, num_city))
-        for i in range(num_city):
-            for j in range(num_city):
-                if i == j:
-                    dis_mat[i][j] = np.inf
-                    continue
-                a = location[i]
-                b = location[j]
-                tmp = np.sqrt(sum([(x[0] - x[1]) ** 2 for x in zip(a, b)]))
-                dis_mat[i][j] = tmp
-        return dis_mat
-
-    # 计算一条路径的长度
     def compute_pathlen(self, path, dis_mat):
+        """# 计算一条路径的长度
+        """
         a = path[0]
         b = path[-1]
         result = dis_mat[a][b]
@@ -101,17 +98,20 @@ class PSO(object):
             b = path[i + 1]
             result += dis_mat[a][b]
         return result
-
-    # 计算一个群体的长度
+    
     def compute_paths(self, paths):
+        """
+        # 计算一个群体的长度
+        """
         result = []
         for one in paths:
             length = self.compute_pathlen(one, self.dis_mat)
             result.append(length)
         return result
-
-    # 评估当前的群体
+    
     def eval_particals(self):
+        """# 评估当前的群体
+        """
         min_lenth = min(self.lenths)
         min_index = self.lenths.index(min_lenth)
         cur_path = self.particals[min_index]
@@ -125,14 +125,16 @@ class PSO(object):
                 self.local_best_len[i] = l
                 self.local_best[i] = self.particals[i]
 
-    # 粒子交叉
+    
     def cross(self, cur, best):
+        """# 粒子交叉
+        """
+        # 新建一个，防止改了基础版
         one = cur.copy()
         l = [t for t in range(self.num_city)]
         t = np.random.choice(l,2)
-        x = min(t)
-        y = max(t)
-        cross_part = best[x:y]
+        cross_part = best[min(t):max(t)]
+        # 检查是不是目标位置的
         tmp = []
         for t in one:
             if t in cross_part:
@@ -148,10 +150,12 @@ class PSO(object):
         else:
             return one, l2
 
-
-    # 粒子变异
     def mutate(self, one):
+        """    # 粒子变异
+        """
+        # 新建一个，防止改了基础版
         one = one.copy()
+        # 正序排列数组
         l = [t for t in range(self.num_city)]
         t = np.random.choice(l, 2)
         x, y = min(t), max(t)
@@ -159,8 +163,9 @@ class PSO(object):
         l2 = self.compute_pathlen(one,self.dis_mat)
         return one, l2
 
-    # 迭代操作
     def pso(self):
+        """    # 迭代操作
+        """
         for cnt in range(1, self.iter_max):
             # 更新粒子群
             for i, one in enumerate(self.particals):
@@ -170,28 +175,28 @@ class PSO(object):
                 if new_l < self.best_l:
                     self.best_l = tmp_l
                     self.best_path = one
-
+                # 加入随机因素
                 if new_l < tmp_l or np.random.rand()<0.1:
                     one = new_one
                     tmp_l = new_l
 
                 # 与当前全局最优解进行交叉
                 new_one, new_l = self.cross(one, self.global_best)
-
+                # 是否更新
                 if new_l < self.best_l:
                     self.best_l = tmp_l
                     self.best_path = one
-
+                # 加入随机因素
                 if new_l < tmp_l or np.random.rand()<0.1:
                     one = new_one
                     tmp_l = new_l
                 # 变异
                 one, tmp_l = self.mutate(one)
-
+                # 是否更新
                 if new_l < self.best_l:
                     self.best_l = tmp_l
                     self.best_path = one
-
+                # 加入随机因素
                 if new_l < tmp_l or np.random.rand()<0.1:
                     one = new_one
                     tmp_l = new_l
@@ -199,6 +204,7 @@ class PSO(object):
                 # 更新该粒子
                 self.particals[i] = one
                 self.lenths[i] = tmp_l
+
             # 评估粒子群，更新个体局部最优和个体当前全局最优
             self.eval_particals()
             # 更新输出解
@@ -214,30 +220,6 @@ class PSO(object):
         best_length, best_path = self.pso()
         # 画出最终路径
         return best_path, best_length
-
-
-# 读取数据
-def read_tsp(path):
-    lines = open(path, 'r').readlines()
-    assert 'NODE_COORD_SECTION\n' in lines
-    index = lines.index('NODE_COORD_SECTION\n')
-    data = lines[index + 1:-1]
-    tmp = []
-    for line in data:
-        line = line.strip().split(' ')
-        if line[0] == 'EOF':
-            continue
-        tmpline = []
-        for x in line:
-            if x == '':
-                continue
-            else:
-                tmpline.append(float(x))
-        if tmpline == []:
-            continue
-        tmp.append(tmpline)
-    data = tmp
-    return data
 
 
 # data = read_tsp('data/st70.tsp')

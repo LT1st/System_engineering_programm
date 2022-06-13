@@ -26,17 +26,22 @@
 - 通过全局变量和修饰器获取数据加载、计算耗时
 - 自动数据集下载脚本，运行既获取
 
-### Visualization_for_TSP(ATSP)_datasets 提供了数据可视化
+## 🌟Visualization 提供了数据可视化
+
 - 利用networkx库，解决了大多数TSP测试样例未提供坐标，无法可视化的问题
 - 根据加载器类*TSP_DATA*返回可视化数据，数据接口无需调整
 
-## 🌟collection_from_web 算法合集
-- 存放网络上找到的TSP求解算法。由于时间有限，又想测试尽可能多的算法，因此使用了部分网络开源代码
+## 🌟collection 算法合集
+- TSP求解算法。由于时间有限，又想测试尽可能多的算法，因此使用了部分网络开源代码
 
 ## 🌟my_algorithm 算法合集
-- 存放我写的算法代码
+- 存放我写的算法代码，无法直接用在工程中，用于验证
 ## 🌟[TSP_dataloader_package 开源的py-pi库](https://test.pypi.org/project/TSP-dataloader/)
-我的开源pip库：[官方网站](https://test.pypi.org/project/TSP-dataloader/)
+存放我的开源pip库：[官方网站](https://test.pypi.org/project/TSP-dataloader/)
+
+## 🌟测试函数时间跨文件测量
+
+测量函数运行时间，用于后续训练
 
 ### 使用方法
 ```bash
