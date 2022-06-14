@@ -9,13 +9,13 @@ from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
 
 
 class PSO(object):
-    def __init__(self, num_city, data):
+    def __init__(self, num_city, mat):
         self.iter_max = 500  # 迭代数目
         self.num = 200  # 粒子数目
         self.num_city = num_city  # 城市数
         #self.location = data # 城市的位置坐标
         # 计算距离矩阵
-        self.dis_mat = data  # 计算城市之间的距离矩阵
+        self.dis_mat = np.array(mat)  # 计算城市之间的距离矩阵
         # 初始化所有粒子
         # self.particals = self.random_init(self.num, num_city)
         self.particals = self.greedy_init(self.dis_mat,num_total=self.num,num_city =num_city)
@@ -248,7 +248,7 @@ if __name__ == "__main__":
     import sys
     sys.path.append('..')
     from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
-    datapath = r'D:\0latex\System_engineering_programm\code\collection_from_web\data\st70.tsp'
+    datapath = r'D:\0latex\System_engineering_programm\TSP_tst_data\bayg29.tsp.gz'
     data = TSP_DATA(datapath)
     model = PSO(num_city = data.DIMENSION , mat = data.matrix)
     path, path_len = model.run()

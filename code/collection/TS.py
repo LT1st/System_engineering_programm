@@ -9,14 +9,14 @@ from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
 
 
 class TS(object):
-    def __init__(self, num_city, data):
+    def __init__(self, num_city, mat):
         self.taboo_size = 5
         self.iteration = 500
         self.num_city = num_city
         #self.location = data
         self.taboo = []
 
-        self.dis_mat = np.array(data)
+        self.dis_mat = np.array(mat)
         self.path = self.greedy_init(self.dis_mat,100,num_city)
         self.best_path = self.path
         self.cur_path = self.path
@@ -207,7 +207,7 @@ if __name__ == "__main__":
     import sys
     sys.path.append('..')
     from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
-    datapath = r'D:\0latex\System_engineering_programm\code\collection_from_web\data\st70.tsp'
+    datapath = r'D:\0latex\System_engineering_programm\TSP_tst_data\bayg29.tsp.gz'
     data = TSP_DATA(datapath)
     model = TS(num_city = data.DIMENSION , mat = data.matrix)
     path, path_len = model.run()

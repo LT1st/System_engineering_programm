@@ -164,7 +164,7 @@ class TSP_DATA:
   '''
   # 初始化，读取数据，并获取表头的数据规约
   #@timmer_TSP_DATA_init # 专属修饰器，获得此方法运行时间，每次清空需要重新载入此类
-  def __init__(self, path, requireTable=True, requireMatrix=True, load_now =True):
+  def __init__(self, path, requireTable=True, requireMatrix=True, load_now =True,debug=False):
     """传入单个数据地址，读取并且加载数据的表头
     path:
       单个测试样例的数据地址
@@ -172,15 +172,17 @@ class TSP_DATA:
       需要邻接表？
     requireMatrix：
       需要邻接矩阵？  
+    debug:
+      是否打印详细信息
     """
-    self.debug = False
+    self.debug = debug
     # 读取数据文件
     raw_data, name = self.read_any_file(path)
     # # 无论如何名字都是第0行
     # self.name = raw_data.split(':')[1]
     self.get_headline(raw_data)
     # 保证数据名称和文件名称相同
-    assert self.NAME == name
+    #assert self.NAME == name
     # 保证是TSP问题的文件，同时防止某些测试样例在类型后面瞎加东西
     if 'ATSP' in self.TYPE :
       self.TYPE = 'ATSP'
@@ -189,7 +191,9 @@ class TSP_DATA:
     # 有数据区块 长条list
     self.rawnum = self.get_data_list(raw_data)
     if self.debug:
-      print("原始数据：",self.rawnum)
+        print("名称",self.NAME)
+        print("原始数据：",self.rawnum)
+        print("维数",self.DIMENSION)
     # 计算邻接矩阵 和 邻接表
     if load_now:
       self.cal_table_and_matrix(requireTable=requireTable, requireMatrix=requireMatrix)
@@ -304,7 +308,8 @@ class TSP_DATA:
       
     """
     end_line = len(data_all)-2 # 去掉EOF -1 从零开始 -1
-    print(data_all)
+    if self.debug:
+        print(data_all)
 
     # 距离矩阵
     if self.EDGE_WEIGHT_TYPE == 'EXPLICIT':
@@ -335,6 +340,7 @@ class TSP_DATA:
       if self.debug:
         print(string_data_split)
         print(list_data)
+        
     # 坐标
     else: 
       beging_line = 0
@@ -363,7 +369,8 @@ class TSP_DATA:
         print(data_all[0][0])
       string_data_split = string_data.strip().split(' ')
       # 使用浮点数 1e2就不用手动转换了      
-      list_data =  [float(i) for i in string_data_split if i.isdigit()]
+      #  list_data =  [float(i) for i in string_data_split if i.isdigit()]# 会导致漏掉小数
+      list_data =  [float(i) for i in string_data_split if not i.isspace() and i.strip()]
       if self.debug:
         print(string_data_split)
         print(list_data)
@@ -553,11 +560,11 @@ class TSP_DATA:
       # 数据长度应该是：d + d-1 + d-2 +...+ 1 = (1+d)*d/2
       d = self.DIMENSION
       # 转化为上三角
-      self.rawnum = self.rawnum.reverse()
+      self.rawnum.reverse()
       if not len(self.rawnum) == int((1+d)*d/2):
         raise Exception("获取的raw num数据量不对")
       for i in range(d):
-        # 由于自己有0，第一行不填0，第二行补一个，第n行补n-1个
+        # 由于自己有0，第n行不填0，第n-1行补一个，第1行补n-1个
         row = [0 for j in range(i)]
         # left = sum 0 d d-1 \
         left = int( i*d-(0+i-1)*i/2 )
@@ -598,7 +605,7 @@ class TSP_DATA:
     elif self.EDGE_WEIGHT_FORMAT == "LOWER_ROW":
       # 数据长度应该是：d + d-1 + d-2 +...+ 1 = (1+d)*d/2
       d = self.DIMENSION
-      self.rawnum = self.rawnum.reverse()
+      self.rawnum.reverse()
       if not len(self.rawnum) == int((1+d)*d/2-d):
         raise Exception("获取的raw num数据量不对")
       for i in range(d):

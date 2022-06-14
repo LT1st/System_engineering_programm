@@ -8,6 +8,17 @@
 - 开源项目地址：[@Github](https://github.com/LT1st/System_engineering_programm/tree/master)
 - 开源库地址：[@Pypi](https://test.pypi.org/project/TSP-dataloader/)
 
+# 文件结构
+
+- final_report	最终报告latex文档代码
+- mid_term	    中期文档latex代码
+
+- proposal        开题latex代码
+- code            代码
+- TSP_tst_data    TSP测试数据
+- 读取失败的测试样例 由于维度太大导致加载不出来的失败情况
+- 20220421-TSP    任务要求
+
 # BUG
 
 - [x]  i=j时候计算距离应该是 inf 需要定义一个很大值
@@ -196,8 +207,8 @@ data_class.check_if_reasonable()
 ```
 ### TODO
 - [ ] Add timmer across files. Using another func?
-- [ ] 画图
-- [ ] 注意线上版本和给老师的不一样
+- [x] 画图
+- [x] 注意线上版本和给老师的不一样
 - [ ] if '3D' in self.评估 使用三维数据加载器，坐标表间隔设成4
 
 
