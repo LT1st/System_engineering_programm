@@ -7,6 +7,19 @@ import sys
 sys.path.append('..')
 from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
 
+# 定义一个修饰器函数用来统计函数的运行时间
+# 参考我的csdn  https://blog.csdn.net/prinTao/article/details/121800857?spm=1001.2014.3001.5501
+import time
+def timmer(func):    #传入的参数是一个函数
+    def deco(*args, **kwargs): #本应传入运行函数的各种参数
+        print('\n函数：{_funcname_}开始运行：'.format(_funcname_=func.__name__))
+        start_time = time.time()#调用代运行的函数，并将各种原本的参数传入
+        res = func(*args, **kwargs)
+        end_time = time.time()
+        print('函数:{_funcname_}运行了 {_time_}秒'
+              .format(_funcname_=func.__name__, _time_=(end_time - start_time)))
+        return res#返回值为函数
+    return deco
 
 class TS(object):
     def __init__(self, num_city, mat):
@@ -149,6 +162,7 @@ class TS(object):
             print(cnt, self.best_length)
         print(self.best_length)
 
+    @timmer
     def run(self):
         self.ts()
         return self.best_path, self.best_length
@@ -176,32 +190,6 @@ def read_tsp(path):
         tmp.append(tmpline)
     data = tmp
     return data
-
-
-# data = read_tsp('data/st70.tsp')
-
-# data = np.array(data)
-# plt.suptitle('TS in st70.tsp')
-# data = data[:, 1:]
-# plt.subplot(2, 2, 1)
-# plt.title('raw data')
-# show_data = np.vstack([data, data[0]])
-# plt.plot(data[:, 0], data[:, 1])
-
-# model = TS(num_city=data.shape[0], data=data.copy())
-# Best_path, Best_length = model.run()
-
-# Best_path = np.vstack([Best_path, Best_path[0]])
-# fig, axs = plt.subplots(2, 1, sharex=False, sharey=False)
-# axs[0].scatter(Best_path[:, 0], Best_path[:,1])
-# Best_path = np.vstack([Best_path, Best_path[0]])
-# axs[0].plot(Best_path[:, 0], Best_path[:, 1])
-# axs[0].set_title('规划结果')
-# iterations = model.iter_x
-# best_record = model.iter_y
-# axs[1].plot(iterations, best_record)
-# axs[1].set_title('收敛曲线')
-# plt.show()
 
 if __name__ == "__main__":
     import sys

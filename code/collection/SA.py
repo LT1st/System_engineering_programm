@@ -7,6 +7,21 @@ import sys
 sys.path.append('..')
 from dataloader.Dataloader_for_TSP_datasets import TSP_DATA
 
+# 定义一个修饰器函数用来统计函数的运行时间
+# 参考我的csdn  https://blog.csdn.net/prinTao/article/details/121800857?spm=1001.2014.3001.5501
+import time
+def timmer(func):    #传入的参数是一个函数
+    def deco(*args, **kwargs): #本应传入运行函数的各种参数
+        print('\n函数：{_funcname_}开始运行：'.format(_funcname_=func.__name__))
+        start_time = time.time()#调用代运行的函数，并将各种原本的参数传入
+        res = func(*args, **kwargs)
+        end_time = time.time()
+        print('函数:{_funcname_}运行了 {_time_}秒'
+              .format(_funcname_=func.__name__, _time_=(end_time - start_time)))
+        return res#返回值为函数
+    return deco
+
+
 class SA(object):
     def __init__(self, num_city, mat):
         self.T0 = 4000
@@ -143,7 +158,8 @@ class SA(object):
             self.iter_y.append(best_length)
             print(count, best_length)
         return best_length, best_path
-
+    
+    @timmer
     def run(self):
         best_length, best_path = self.sa()
         return best_path, best_length
